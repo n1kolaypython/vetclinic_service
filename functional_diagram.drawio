@@ -1,0 +1,155 @@
+<mxfile host="65bd71144e">
+    <diagram id="RRAzaoYitpK-9rhb-ZoL" name="Page-1">
+        <mxGraphModel dx="1979" dy="937" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="184" style="edgeStyle=none;html=1;fontSize=11;" edge="1" parent="1" source="180" target="183">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="180" value="Начало" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="425" y="150" width="165" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="182" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;i&gt;Запись клиента на прием&lt;/i&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="-200" y="380" width="290" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="186" style="edgeStyle=none;html=1;fontSize=11;" edge="1" parent="1" source="183" target="185">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="183" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Ввод ФИО клиента&lt;/font&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="424.38" y="240" width="166.25" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="196" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="185" target="194">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="651.8699999999999" y="389.9999999999999" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="197" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="196">
+                    <mxGeometry x="0.237" y="-2" relative="1" as="geometry">
+                        <mxPoint x="-58" y="-2" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="200" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="185">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="507.51" y="700" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="507" y="560"/>
+                            <mxPoint x="508" y="720"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="213" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="200">
+                    <mxGeometry x="-0.5921" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="185" value="Проверка наличия клиента в системе" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="447.51" y="360" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="189" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="659.99" y="580" width="130" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="188" value="Клиентская база" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fontSize=11;" vertex="1" parent="189">
+                    <mxGeometry y="10" width="130" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="187" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fontSize=11;" vertex="1" parent="189">
+                    <mxGeometry width="130" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="199" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=11;" edge="1" parent="1" source="194" target="187">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="194" value="Заполнение клиентом регистрационной формы" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="664.99" y="460" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="202" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="188">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="507.51" y="700" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="207" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;" edge="1" parent="1" source="205" target="206">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="205" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;Ввод желаемого клиентом промежутка дат и времени приема&lt;/span&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="417.5" y="700" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="208" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;" edge="1" parent="1" source="206" target="205">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="360" y="850"/>
+                            <mxPoint x="360" y="730"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="209" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="208">
+                    <mxGeometry x="-0.5753" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="211" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" parent="1" source="206">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="690" y="850" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="212" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="211">
+                    <mxGeometry x="-0.2588" y="1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="206" value="Поиск свободных мест для записи на прием" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="447.5" y="820" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="218" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" parent="1" source="214" target="217">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="219" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="218">
+                    <mxGeometry x="-0.3141" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="221" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="214" target="227">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1005" y="740" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="223" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="221">
+                    <mxGeometry x="-0.5378" y="-2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="214" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Подтверждение пользователя&lt;/font&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="680" y="820" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="217" value="Конец" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="697.5" y="950" width="165" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="231" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" parent="1" source="227" target="229">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="233" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" parent="1" source="227" target="232">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="227" value="Формирование записи на прием" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="955" y="660" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="228" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="950" y="505" width="130" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="229" value="База записей приемов" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fontSize=11;" vertex="1" parent="228">
+                    <mxGeometry y="10" width="130" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="230" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fontSize=11;" vertex="1" parent="228">
+                    <mxGeometry width="130" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="232" value="Информация о приеме" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="1120" y="650" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="234" value="Конец" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="932.5" y="380" width="165" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="235" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;" edge="1" parent="1" source="230" target="234">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
