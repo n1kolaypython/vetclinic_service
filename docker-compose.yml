@@ -13,7 +13,7 @@ services:
       POSTGRES_USER: "${DB_USER_NAME}"
       POSTGRES_PASSWORD: "${DB_USER_PASSWORD}"
     volumes:
-      - "./local/var/lib/postgresql:/var/lib/postgresql"
+      - "./local/var/lib/postgresql/data:/var/lib/postgresql/data"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready" ]
       interval: 10s
@@ -44,6 +44,22 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
     volumes:
       - "./local/pgadmin4/servers.json:/pgadmin4/servers.json"
+    depends_on:
+      vetclinic_postgres:
+        condition: service_healthy
+
+  backend:
+    build: .
+    networks:
+      - vetclinic_service_network
+    ports:
+      - "8000:8000"
+    environment:
+      DB_NAME: "${DB_NAME}"
+      DB_USER_NAME: "${DB_USER_NAME}"
+      DB_USER_PASSWORD: "${DB_USER_PASSWORD}"
+      DB_HOST: vetclinic_postgres
+      DB_PORT: "${DB_PORT}"
     depends_on:
       vetclinic_postgres:
         condition: service_healthy
