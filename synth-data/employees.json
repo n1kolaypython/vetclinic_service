@@ -1,0 +1,90 @@
+{
+    "type": "array",
+    "length": 10,
+    "content": {
+        "type": "object",
+        "id": {
+            "type": "string",
+            "uuid": {}
+        },
+        "full_name": {
+            "type": "string",
+            "format": {
+                "format": "{name} {surname}",
+                "arguments": {
+                    "name": {
+                        "type": "string",
+                        "faker": {
+                            "generator": "first_name"
+                        }
+                    },
+                    "surname": {
+                        "type": "string",
+                        "faker": {
+                            "generator": "last_name"
+                        }
+                    }
+                }
+            }
+        },
+        "phone_number": {
+            "type": "unique",
+            "content": {
+                "type": "string",
+                "format": {
+                    "format": "{fp}-{sp}-{tp}",
+                    "arguments": {
+                        "fp": {
+                            "type": "number",
+                            "range": {
+                                "low": 100,
+                                "high": 999
+                            }
+                        },
+                        "sp": {
+                            "type": "number",
+                            "range": {
+                                "low": 100,
+                                "high": 999
+                            }
+                        },
+                        "tp": {
+                            "type": "number",
+                            "range": {
+                                "low": 1000,
+                                "high": 9999
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "email": {
+            "type": "unique",
+            "optional": false,
+            "content": {
+                "type": "string",
+                "format": {
+                    "format": "{name}.{surname}{random_number}@vetclinic.com",
+                    "arguments": {
+                        "name": {
+                            "type": "same_as",
+                            "ref": "clients.content.full_name.name"
+                        },
+                        "surname": {
+                            "type": "same_as",
+                            "ref": "clients.content.full_name.surname"
+                        },
+                        "random_number": {
+                            "type": "number",
+                            "range": {
+                                "low": 1000,
+                                "high": 9999
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

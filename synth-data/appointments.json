@@ -1,0 +1,68 @@
+{
+    "type": "array",
+    "length": 1000,
+    "content": {
+        "type": "object",
+        "id": {
+            "type": "string",
+            "uuid": {}
+        },
+        "start_time": {
+            "type": "date_time",
+            "format": "%Y-%m-%dT%H:%M:%S",
+            "subtype": "naive_date_time",
+            "begin": "2023-01-01T08:00:00",
+            "end": "2024-01-01T18:00:00"
+        },
+        "end_time": {
+            "type": "date_time",
+            "format": "%Y-%m-%dT%H:%M:%S",
+            "subtype": "naive_date_time",
+            "begin": "2023-01-01T08:00:00",
+            "end": "2024-01-01T18:00:00"
+        },
+        "cabinet": {
+            "type": "string",
+            "format": {
+                "format": "{letter}-{number}",
+                "arguments": {
+                    "letter": {
+                        "type": "string",
+                        "categorical": {
+                            "A": 1,
+                            "B": 1,
+                            "C": 1
+                        }
+                    },
+                    "number": {
+                        "type": "number",
+                        "range": {
+                            "low": 100,
+                            "high": 500,
+                            "step": 10
+                        }
+                    }
+                }
+            }
+        },
+        "created_at": {
+            "type": "date_time",
+            "format": "%Y-%m-%dT%H:%M:%S",
+            "subtype": "naive_date_time",
+            "begin": "2023-01-01T08:00:00",
+            "end": "2024-01-01T18:00:00"
+        },
+        "client_id": {
+            "type": "same_as",
+            "ref": "clients.content.id"
+        },
+        "pet_id": {
+            "type": "same_as",
+            "ref": "pets.content.id"
+        },
+        "employee_id": {
+            "type": "same_as",
+            "ref": "employees.content.id"
+        }
+    }
+}
