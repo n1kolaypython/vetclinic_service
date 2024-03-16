@@ -14,7 +14,7 @@ async def get_appointments(
     limit: int = 10,
     offset: int = 0,
 ) -> list[AppointmentResponse]:
-    return await service.get_all_pets(limit, offset)
+    return await service.get_all_appointments(limit, offset)
 
 
 @router.get("/{id}", status_code=status.HTTP_200_OK)
@@ -22,14 +22,14 @@ async def get_one_appointment(
     service: Annotated[AppointmentService, Depends(get_appointment_service)],
     id: UUID,
 ) -> AppointmentResponse:
-    return await service.get_pet(id)
+    return await service.get_appointment(id)
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_new_client(
     service: Annotated[AppointmentService, Depends(get_appointment_service)],
     data: CreateAppointmentRequest,
 ) -> AppointmentResponse:
-    return await service.create_pet(data)
+    return await service.create_appointment(data)
 
 @router.patch("/{id}", status_code=status.HTTP_200_OK)
 async def update_client(
@@ -37,11 +37,11 @@ async def update_client(
     id: UUID,
     data: UpdateAppointmentRequest,
 ) -> AppointmentResponse:
-    return await service.update_pet(id, data)
+    return await service.update_appointment(id, data)
 
 @router.delete("/{id}", status_code=status.HTTP_200_OK)
 async def delete_client(
     service: Annotated[AppointmentService, Depends(get_appointment_service)],
     id: UUID,
 ) -> AppointmentResponse:
-    return await service.delete_pet(id)
+    return await service.delete_appointment(id)

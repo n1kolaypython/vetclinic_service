@@ -13,7 +13,7 @@ class AppointmentService:
     def __init__(self, repo: AppointmentRepo) -> None:
         self.repo = repo
 
-    async def get_pet(self, id: UUID) -> AppointmentResponse:
+    async def get_appointment(self, id: UUID) -> AppointmentResponse:
         record: asyncpg.Record = await self.repo.get_single(id)
         return AppointmentResponse(
             id=record["id"],
@@ -26,7 +26,7 @@ class AppointmentService:
             pet_id=record["pet_id"],
         )
 
-    async def get_all_pets(self, limit: int, offset: int) -> list[AppointmentResponse]:
+    async def get_all_appointments(self, limit: int, offset: int) -> list[AppointmentResponse]:
         records = await self.repo.get_all(limit, offset)
         return [
             AppointmentResponse(
@@ -42,7 +42,7 @@ class AppointmentService:
             for r in records
         ]
 
-    async def create_pet(self, data: CreateAppointmentRequest) -> AppointmentResponse:
+    async def create_appointment(self, data: CreateAppointmentRequest) -> AppointmentResponse:
         record: asyncpg.Record = await self.repo.insert_one(
             data.start_time,
             data.end_time,
@@ -62,7 +62,7 @@ class AppointmentService:
             pet_id=record["pet_id"],
         )
 
-    async def update_pet(self, id: UUID, data: UpdateAppointmentRequest) -> AppointmentResponse:
+    async def update_appointment(self, id: UUID, data: UpdateAppointmentRequest) -> AppointmentResponse:
         record: asyncpg.Record = await self.repo.update_one(
             id,
             **data.model_dump(),
@@ -78,7 +78,7 @@ class AppointmentService:
             pet_id=record["pet_id"],
         )
 
-    async def delete_pet(self, id: UUID) -> AppointmentResponse:
+    async def delete_appointment(self, id: UUID) -> AppointmentResponse:
         record: asyncpg.Record = await self.repo.delete_one(id)
         return AppointmentResponse(
             id=record["id"],
