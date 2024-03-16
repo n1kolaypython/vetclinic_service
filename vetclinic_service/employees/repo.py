@@ -27,7 +27,7 @@ class EmployeeRepo:
         id: UUID,
     ) -> asyncpg.Record:
         stmt = await self.conn.prepare("SELECT * FROM employees WHERE employees.id = $1")
-        record: asyncpg.Record = await stmt.fetchrow(id)
+        record: asyncpg.Record = await stmt.fetchrow(str(id))
         return record
 
     async def insert_one(
@@ -65,7 +65,7 @@ class EmployeeRepo:
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
                 f"UPDATE employees SET {set_stmt} WHERE employees.id = $1 RETURNING *",
-                id,
+                str(id),
                 *[value for value in data.values() if value is not None],
             )
 
@@ -78,7 +78,7 @@ class EmployeeRepo:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                "DELETE FROM employees WHERE employees.id = $1 RETURNING *", id
+                "DELETE FROM employees WHERE employees.id = $1 RETURNING *", str(id)
             )
 
         return record
