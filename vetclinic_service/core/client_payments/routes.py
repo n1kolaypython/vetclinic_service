@@ -9,7 +9,7 @@ router = APIRouter(prefix="/payments", tags=["clients"])
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
-async def get_clinet_payments(
+async def get_client_payments(
     service: Annotated[ClientPaymentService, Depends(get_appointment_service)],
     limit: int = 10,
     offset: int = 0,
