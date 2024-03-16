@@ -3,7 +3,7 @@ from typing import Any
 from uuid import UUID
 
 
-class ClientRepo:
+class EmployeeRepo:
 
     def __init__(
         self,
@@ -17,7 +17,7 @@ class ClientRepo:
         offset: int,
     ) -> list[asyncpg.Record]:
         stmt = await self.conn.prepare(
-            "SELECT * FROM clients ORDER BY full_name LIMIT $1 OFFSET $2"
+            "SELECT * FROM employees ORDER BY full_name LIMIT $1 OFFSET $2"
         )
         records: list[asyncpg.Record] = await stmt.fetch(limit, offset)
         return records
@@ -26,20 +26,20 @@ class ClientRepo:
         self,
         id: UUID,
     ) -> asyncpg.Record:
-        stmt = await self.conn.prepare("SELECT * FROM clients WHERE clients.id = $1")
-        record: asyncpg.Record = await stmt.fetchrow(id)
+        stmt = await self.conn.prepare("SELECT * FROM employees WHERE employees.id = $1")
+        record: asyncpg.Record = await stmt.fetchrow(str(id))
         return record
 
     async def insert_one(
         self,
         full_name: str,
         phone_number: str,
-        email: str,
+        email: str | None,
     ) -> asyncpg.Record:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                "INSERT INTO clients (full_name, phone_number, email) VALUES ($1, $2, $3) RETURNING *",
+                "INSERT INTO employees (full_name, phone_number, email) VALUES ($1, $2, $3) RETURNING *",
                 full_name,
                 phone_number,
                 email,
@@ -64,8 +64,8 @@ class ClientRepo:
         )
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                f"UPDATE clients SET {set_stmt} WHERE clients.id = $1 RETURNING *",
-                id,
+                f"UPDATE employees SET {set_stmt} WHERE employees.id = $1 RETURNING *",
+                str(id),
                 *[value for value in data.values() if value is not None],
             )
 
@@ -78,7 +78,7 @@ class ClientRepo:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                "DELETE FROM clients WHERE clients.id = $1 RETURNING *", id
+                "DELETE FROM employees WHERE employees.id = $1 RETURNING *", str(id)
             )
 
         return record

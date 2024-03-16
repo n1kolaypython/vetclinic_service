@@ -9,7 +9,7 @@ router = APIRouter(prefix="/pets", tags=["pets"])
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
-async def get_pets(
+async def get_all_pets(
     service: Annotated[PetService, Depends(get_pet_service)],
     limit: int = 10,
     offset: int = 0,
@@ -18,21 +18,21 @@ async def get_pets(
 
 
 @router.get("/{id}", status_code=status.HTTP_200_OK)
-async def get_one_client(
+async def get_one_pet(
     service: Annotated[PetService, Depends(get_pet_service)],
     id: UUID,
 ) -> PetResponse:
     return await service.get_pet(id)
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_new_client(
+async def create_new_pet(
     service: Annotated[PetService, Depends(get_pet_service)],
     data: CreatePetRequest,
 ) -> PetResponse:
     return await service.create_pet(data)
 
 @router.patch("/{id}", status_code=status.HTTP_200_OK)
-async def update_client(
+async def update_pet(
     service: Annotated[PetService, Depends(get_pet_service)],
     id: UUID,
     data: UpdatePetRequest,
@@ -40,7 +40,7 @@ async def update_client(
     return await service.update_pet(id, data)
 
 @router.delete("/{id}", status_code=status.HTTP_200_OK)
-async def delete_client(
+async def delete_pet(
     service: Annotated[PetService, Depends(get_pet_service)],
     id: UUID,
 ) -> PetResponse:

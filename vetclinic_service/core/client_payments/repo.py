@@ -1,9 +1,11 @@
+from decimal import Decimal
 import asyncpg
+from datetime import datetime
 from typing import Any
 from uuid import UUID
 
 
-class PetRepo:
+class ClientPaymentRepo:
 
     def __init__(
         self,
@@ -16,33 +18,35 @@ class PetRepo:
         limit: int,
         offset: int,
     ) -> list[asyncpg.Record]:
-        stmt = await self.conn.prepare("SELECT * FROM pets LIMIT $1 OFFSET $2")
+        stmt = await self.conn.prepare("SELECT * FROM client_payments LIMIT $1 OFFSET $2")
         records: list[asyncpg.Record] = await stmt.fetch(limit, offset)
         return records
+
+    async def get_between(
+        self,
+    ) -> list[asyncpg.Record]: ...
 
     async def get_single(
         self,
         id: UUID,
     ) -> asyncpg.Record:
-        stmt = await self.conn.prepare("SELECT * FROM pets WHERE pets.id = $1")
-        record: asyncpg.Record = await stmt.fetchrow(id)
+        stmt = await self.conn.prepare(
+            "SELECT * FROM client_payments WHERE client_payments.id = $1"
+        )
+        record: asyncpg.Record = await stmt.fetchrow(str(id))
         return record
 
     async def insert_one(
         self,
-        nickname: str,
-        species: str,
-        breed: str,
-        owner_id: UUID,
+        appointmend_id: UUID,
+        total: Decimal 
     ) -> asyncpg.Record:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                "INSERT INTO pets (nickname, species, breed, owner_id) VALUES ($1, $2, $3, $4) RETURNING *",
-                nickname,
-                species,
-                breed,
-                owner_id,
+                "INSERT INTO client_payments (total, appointment_id) VALUES ($1, $2) RETURNING *",
+                total,
+                str(appointmend_id),
             )
 
         return record
@@ -64,8 +68,8 @@ class PetRepo:
         )
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                f"UPDATE pets SET {set_stmt} WHERE pets.id = $1 RETURNING *",
-                id,
+                f"UPDATE client_payments SET {set_stmt} WHERE client_payments.id = $1 RETURNING *",
+                str(id),
                 *[value for value in data.values() if value is not None],
             )
 
@@ -78,7 +82,7 @@ class PetRepo:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                "DELETE FROM pets WHERE pets.id = $1 RETURNING *", id
+                "DELETE FROM client_payments WHERE client_payments.id = $1 RETURNING *", str(id)
             )
 
         return record

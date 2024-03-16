@@ -3,7 +3,7 @@ from typing import Any
 from uuid import UUID
 
 
-class EmployeeRepo:
+class PetRepo:
 
     def __init__(
         self,
@@ -16,9 +16,7 @@ class EmployeeRepo:
         limit: int,
         offset: int,
     ) -> list[asyncpg.Record]:
-        stmt = await self.conn.prepare(
-            "SELECT * FROM employees ORDER BY full_name LIMIT $1 OFFSET $2"
-        )
+        stmt = await self.conn.prepare("SELECT * FROM pets LIMIT $1 OFFSET $2")
         records: list[asyncpg.Record] = await stmt.fetch(limit, offset)
         return records
 
@@ -26,23 +24,25 @@ class EmployeeRepo:
         self,
         id: UUID,
     ) -> asyncpg.Record:
-        stmt = await self.conn.prepare("SELECT * FROM employees WHERE employees.id = $1")
-        record: asyncpg.Record = await stmt.fetchrow(id)
+        stmt = await self.conn.prepare("SELECT * FROM pets WHERE pets.id = $1")
+        record: asyncpg.Record = await stmt.fetchrow(str(id))
         return record
 
     async def insert_one(
         self,
-        full_name: str,
-        phone_number: str,
-        email: str | None,
+        nickname: str,
+        species: str,
+        breed: str,
+        owner_id: UUID,
     ) -> asyncpg.Record:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                "INSERT INTO employees (full_name, phone_number, email) VALUES ($1, $2, $3) RETURNING *",
-                full_name,
-                phone_number,
-                email,
+                "INSERT INTO pets (nickname, species, breed, owner_id) VALUES ($1, $2, $3, $4) RETURNING *",
+                nickname,
+                species,
+                breed,
+                str(owner_id),
             )
 
         return record
@@ -64,8 +64,8 @@ class EmployeeRepo:
         )
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                f"UPDATE employees SET {set_stmt} WHERE employees.id = $1 RETURNING *",
-                id,
+                f"UPDATE pets SET {set_stmt} WHERE pets.id = $1 RETURNING *",
+                str(id),
                 *[value for value in data.values() if value is not None],
             )
 
@@ -78,7 +78,7 @@ class EmployeeRepo:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
-                "DELETE FROM employees WHERE employees.id = $1 RETURNING *", id
+                "DELETE FROM pets WHERE pets.id = $1 RETURNING *", str(id)
             )
 
         return record
