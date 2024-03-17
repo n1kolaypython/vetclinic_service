@@ -25,7 +25,7 @@ class EmployeeRepo:
     async def get_single(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         stmt = await self.conn.prepare("SELECT * FROM employees WHERE employees.id = $1")
         record: asyncpg.Record = await stmt.fetchrow(str(id))
         return record
@@ -35,7 +35,7 @@ class EmployeeRepo:
         full_name: str,
         phone_number: str,
         email: str | None,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
@@ -74,7 +74,7 @@ class EmployeeRepo:
     async def delete_one(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(

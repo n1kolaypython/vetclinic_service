@@ -1,4 +1,10 @@
 from uuid import UUID
+from .errors import (
+    AppointmentCreateAbort,
+    AppointmentNotFound,
+    AppointmentNotFoundOrDeleteAbort,
+    AppointmentNotFoundOrUpdateAbort,
+)
 from .schemas import (
     AppointmentResponse,
     CreateAppointmentRequest,
@@ -10,11 +16,21 @@ from .repo import AppointmentRepo
 
 class AppointmentService:
 
-    def __init__(self, repo: AppointmentRepo) -> None:
+    def __init__(
+        self,
+        repo: AppointmentRepo,
+    ) -> None:
         self.repo = repo
 
-    async def get_appointment(self, id: UUID) -> AppointmentResponse:
-        record: asyncpg.Record = await self.repo.get_single(id)
+    async def get_appointment(
+        self,
+        id: UUID,
+    ) -> AppointmentResponse:
+        record = await self.repo.get_single(id)
+
+        if record is None:
+            raise AppointmentNotFound
+
         return AppointmentResponse(
             id=record["id"],
             start_time=record["start_time"],
@@ -26,7 +42,11 @@ class AppointmentService:
             pet_id=record["pet_id"],
         )
 
-    async def get_all_appointments(self, limit: int, offset: int) -> list[AppointmentResponse]:
+    async def get_all_appointments(
+        self,
+        limit: int,
+        offset: int,
+    ) -> list[AppointmentResponse]:
         records = await self.repo.get_all(limit, offset)
         return [
             AppointmentResponse(
@@ -42,7 +62,10 @@ class AppointmentService:
             for r in records
         ]
 
-    async def create_appointment(self, data: CreateAppointmentRequest) -> AppointmentResponse:
+    async def create_appointment(
+        self,
+        data: CreateAppointmentRequest,
+    ) -> AppointmentResponse:
         record: asyncpg.Record = await self.repo.insert_one(
             data.start_time,
             data.end_time,
@@ -51,6 +74,10 @@ class AppointmentService:
             data.employee_id,
             data.pet_id,
         )
+
+        if record is None:
+            raise AppointmentCreateAbort
+
         return AppointmentResponse(
             id=record["id"],
             start_time=record["start_time"],
@@ -62,11 +89,19 @@ class AppointmentService:
             pet_id=record["pet_id"],
         )
 
-    async def update_appointment(self, id: UUID, data: UpdateAppointmentRequest) -> AppointmentResponse:
-        record: asyncpg.Record = await self.repo.update_one(
+    async def update_appointment(
+        self,
+        id: UUID,
+        data: UpdateAppointmentRequest,
+    ) -> AppointmentResponse:
+        record = await self.repo.update_one(
             id,
             **data.model_dump(),
         )
+
+        if record is None:
+            raise AppointmentNotFoundOrUpdateAbort
+
         return AppointmentResponse(
             id=record["id"],
             start_time=record["start_time"],
@@ -78,8 +113,15 @@ class AppointmentService:
             pet_id=record["pet_id"],
         )
 
-    async def delete_appointment(self, id: UUID) -> AppointmentResponse:
+    async def delete_appointment(
+        self,
+        id: UUID,
+    ) -> AppointmentResponse:
         record: asyncpg.Record = await self.repo.delete_one(id)
+
+        if record is None:
+            raise AppointmentNotFoundOrDeleteAbort
+
         return AppointmentResponse(
             id=record["id"],
             start_time=record["start_time"],
