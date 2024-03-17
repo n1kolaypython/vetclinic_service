@@ -1,11 +1,22 @@
-from fastapi import APIRouter, status, Depends
+from email.policy import HTTP
+from fastapi import APIRouter, status, Depends, HTTPException
 from uuid import UUID
 from typing import Annotated
-from .schemas import ClientPaymentResponse, CreateClientPaymentRequest, UpdateClientPaymentRequest 
-from .service import ClientPaymentService 
-from .deps import get_appointment_service 
+from .errors import (
+    ClientPaymentNotFoundOrUpdateAbort,
+    ClientPaymentCreateAbort,
+    ClientPaymentNotFound,
+    ClientPaymentNotFoundOrDeleteAbort,
+)
+from .schemas import (
+    ClientPaymentResponse,
+    CreateClientPaymentRequest,
+    UpdateClientPaymentRequest,
+)
+from .service import ClientPaymentService
+from .deps import get_appointment_service
 
-router = APIRouter(prefix="/payments", tags=["clients"])
+router = APIRouter()
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
@@ -22,14 +33,28 @@ async def get_one_client_payment(
     service: Annotated[ClientPaymentService, Depends(get_appointment_service)],
     id: UUID,
 ) -> ClientPaymentResponse:
-    return await service.get_client_payment(id)
+    try:
+        return await service.get_client_payment(id)
+    except ClientPaymentNotFound:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="client payment not found",
+        )
+
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_new_client_payment(
     service: Annotated[ClientPaymentService, Depends(get_appointment_service)],
     data: CreateClientPaymentRequest,
 ) -> ClientPaymentResponse:
-    return await service.create_client_payment(data)
+    try:
+        return await service.create_client_payment(data)
+    except ClientPaymentCreateAbort:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="failed to create client payment",
+        )
+
 
 @router.patch("/{id}", status_code=status.HTTP_200_OK)
 async def update_client_payment(
@@ -37,11 +62,24 @@ async def update_client_payment(
     id: UUID,
     data: UpdateClientPaymentRequest,
 ) -> ClientPaymentResponse:
-    return await service.update_client_payment(id, data)
+    try:
+        return await service.update_client_payment(id, data)
+    except ClientPaymentNotFoundOrUpdateAbort:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="client payment not found or client payment update was failed",
+        )
+
 
 @router.delete("/{id}", status_code=status.HTTP_200_OK)
 async def delete_client_payment(
     service: Annotated[ClientPaymentService, Depends(get_appointment_service)],
     id: UUID,
 ) -> ClientPaymentResponse:
-    return await service.delete_client_payment(id)
+    try:
+        return await service.delete_client_payment(id)
+    except ClientPaymentNotFoundOrDeleteAbort:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="client payment not found or client payment create was failed",
+        )

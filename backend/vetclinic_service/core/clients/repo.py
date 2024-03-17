@@ -25,7 +25,7 @@ class ClientRepo:
     async def get_single(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         stmt = await self.conn.prepare("SELECT * FROM clients WHERE clients.id = $1")
         record: asyncpg.Record = await stmt.fetchrow(str(id))
         return record
@@ -34,9 +34,9 @@ class ClientRepo:
         self,
         full_name: str,
         phone_number: str,
-        email: str,
-    ) -> asyncpg.Record:
-        record: asyncpg.Record
+        email: str | None,
+    ) -> asyncpg.Record | None:
+        record: asyncpg.Record | None
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
                 "INSERT INTO clients (full_name, phone_number, email) VALUES ($1, $2, $3) RETURNING *",
@@ -74,8 +74,8 @@ class ClientRepo:
     async def delete_one(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
-        record: asyncpg.Record
+    ) -> asyncpg.Record | None:
+        record: asyncpg.Record | None
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
                 "DELETE FROM clients WHERE clients.id = $1 RETURNING *", str(id)

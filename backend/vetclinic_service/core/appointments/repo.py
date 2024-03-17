@@ -23,12 +23,12 @@ class AppointmentRepo:
 
     async def get_between(
         self,
-    ) -> list[asyncpg.Record]: ...
+    ) -> list[asyncpg.Record] | None: ...
 
     async def get_single(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         stmt = await self.conn.prepare(
             "SELECT * FROM appointments WHERE appointments.id = $1"
         )
@@ -40,10 +40,10 @@ class AppointmentRepo:
         start_time: datetime,
         end_time: datetime,
         cabinet: str,
-        client_id: UUID,
+        client_id: UUID | None,
         employee_id: UUID,
-        pet_id: UUID,
-    ) -> asyncpg.Record:
+        pet_id: UUID | None,
+    ) -> asyncpg.Record | None:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
@@ -85,7 +85,7 @@ class AppointmentRepo:
     async def delete_one(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(

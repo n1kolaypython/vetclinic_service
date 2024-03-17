@@ -23,19 +23,19 @@ class PetRepo:
     async def get_single(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         stmt = await self.conn.prepare("SELECT * FROM pets WHERE pets.id = $1")
-        record: asyncpg.Record = await stmt.fetchrow(str(id))
+        record: asyncpg.Record | None = await stmt.fetchrow(str(id))
         return record
 
     async def insert_one(
         self,
-        nickname: str,
+        nickname: str | None,
         species: str,
-        breed: str,
-        owner_id: UUID,
-    ) -> asyncpg.Record:
-        record: asyncpg.Record
+        breed: str | None,
+        owner_id: UUID | None,
+    ) -> asyncpg.Record | None:
+        record: asyncpg.Record | None
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
                 "INSERT INTO pets (nickname, species, breed, owner_id) VALUES ($1, $2, $3, $4) RETURNING *",
@@ -74,7 +74,7 @@ class PetRepo:
     async def delete_one(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
