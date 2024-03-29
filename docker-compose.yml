@@ -32,23 +32,23 @@ services:
       vetclinic_postgres:
         condition: service_healthy
 
-  pgadmin:
-    container_name: pgadmin_vetclinic
-    image: dpage/pgadmin4:latest
-    ports:
-      - "${PGADMIN_PORT}:80"
-    networks:
-      - vetclinic_service_network
-    environment:
-      PGADMIN_LISTEN_ADDRESS: pgadmin
-      PGADMIN_LISTEN_PORT: 8080
-      PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
-      PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
-    volumes:
-      - "./local/pgadmin4/servers.json:/pgadmin4/servers.json"
-    depends_on:
-      vetclinic_postgres:
-        condition: service_healthy
+  # pgadmin:
+  #   container_name: pgadmin_vetclinic
+  #   image: dpage/pgadmin4:latest
+  #   ports:
+  #     - "${PGADMIN_PORT}:80"
+  #   networks:
+  #     - vetclinic_service_network
+  #   environment:
+  #     PGADMIN_LISTEN_ADDRESS: pgadmin
+  #     PGADMIN_LISTEN_PORT: 8080
+  #     PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
+  #     PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
+  #   volumes:
+  #     - "./local/pgadmin4/servers.json:/pgadmin4/servers.json"
+  #   depends_on:
+  #     vetclinic_postgres:
+  #       condition: service_healthy
 
   backend:
     build: ./backend
