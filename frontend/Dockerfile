@@ -1,18 +1,15 @@
-FROM node:21-alpine AS build    
+FROM node:21-alpine
 
-WORKDIR /build
+WORKDIR /app
 
-COPY ./package.json package.json
-COPY ./package-lock.json package-lock.json
-RUN npm ci
+COPY ./package.json ./
 
-COPY public/ public
-COPY src/ src
+RUN npm install
 
-RUN npm run build
+COPY . .
 
+#RUN npm run build
 
-FROM httpd:alpine
+EXPOSE 80
 
-WORKDIR /var/www/html
-COPY --from=build /build/build/ .
+CMD ["npm", "start"]
