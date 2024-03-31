@@ -29,7 +29,7 @@ class ClientPaymentRepo:
     async def get_single(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         stmt = await self.conn.prepare(
             "SELECT * FROM client_payments WHERE client_payments.id = $1"
         )
@@ -40,7 +40,7 @@ class ClientPaymentRepo:
         self,
         appointmend_id: UUID,
         total: Decimal 
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
@@ -78,7 +78,7 @@ class ClientPaymentRepo:
     async def delete_one(
         self,
         id: UUID,
-    ) -> asyncpg.Record:
+    ) -> asyncpg.Record | None:
         record: asyncpg.Record
         async with self.conn.transaction():
             record = await self.conn.fetchrow(
